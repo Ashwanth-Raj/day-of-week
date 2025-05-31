@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Day of the Week Finder</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <div class="container">
+      <h2>Day of the Week Finder</h2>
+      <div class="input-group">
+        <div>
+          <label for="day">Enter Day (DD):</label>
+          <input type="number" id="day" min="1" max="31" placeholder="DD" />
+        </div>
+        <div>
+          <label for="month">Enter Month (MM):</label>
+          <input type="number" id="month" min="1" max="12" placeholder="MM" />
+        </div>
+        <div>
+          <label for="year">Enter Year (YYYY):</label>
+          <input
+            type="number"
+            id="year"
+            min="1000"
+            max="9999"
+            placeholder="YYYY"
+          />
+        </div>
+      </div>
+      <button onclick="findDay()">Find Day</button>
+      <div class="result" id="result"></div>
+    </div>
+    <script>
+      function findDay() {
+        let day = parseInt(document.getElementById("day").value);
+        let month = parseInt(document.getElementById("month").value);
+        let year = parseInt(document.getElementById("year").value);
+        if (
+          isNaN(day) ||
+          isNaN(month) ||
+          isNaN(year) ||
+          day < 1 ||
+          day > 31 ||
+          month < 1 ||
+          month > 12 ||
+          year < 1000 ||
+          year > 9999
+        ) {
+          document.getElementById("result").innerText =
+            "Please enter a valid date!";
+          return;
+        }
+        if (month < 3) {
+          month += 12;
+          year -= 1;
+        }
+        let K = year % 100;
+        let J = Math.floor(year / 100);
+        let h =
+          (day +
+            Math.floor((13 * (month + 1)) / 5) +
+            K +
+            Math.floor(K / 4) +
+            Math.floor(J / 4) +
+            5 * J) %
+          7;
+        let days = [
+          "Saturday",
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+        ];
+        let dayName = days[h];
+        document.getElementById("result").innerText = `The day is: ${dayName}`;
+      }
+    </script>
+  </body>
+</html>
